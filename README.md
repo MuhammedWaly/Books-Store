@@ -54,7 +54,7 @@
 1. **Microsoft Identity Integration:**
    - Implement Microsoft Identity for user authentication and authorization.
 
-2. **Email Confirmation:**
+2. **Email Confirmation (IEmailSender):**
    - Users should receive email confirmation upon registration.
 
 3. **Google External Provider:**
