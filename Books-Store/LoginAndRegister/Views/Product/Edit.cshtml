@@ -1,0 +1,119 @@
+﻿@model ProductForm
+@{
+    ViewData["Title"] = $"Edit {Model.BookName} Book";
+}
+<section class="row justify-content-between">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <h1>Edit @Model.BookName</h1>
+            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+            <input type="hidden" asp-for="Id" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="BookName">Book Name</label>
+                <input asp-for="BookName" class="form-control" aria-required="true" />
+                
+                <span asp-validation-for="BookName" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label asp-for="AuthorName">Author Name</label>
+                <input asp-for="AuthorName" class="form-control" aria-required="true" />
+                
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Price">Price</label>
+                <input asp-for="Price" class="form-control" autocomplete="username" aria-required="true" />
+                
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class=" form-group ">
+                <label class="text-muted" asp-for="GenresId"></label>
+                <select class="form-control" asp-for="GenresId" asp-items="@(new SelectList(Model.Genres,"Id","GenreName"))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="GenresId" class="text-danger"></span>
+            </div>
+            <div class="custom-file form-group mt-3">
+                <label class="custom-file-label" for="Image"></label>
+                <input type="file" class="custom-file-input" id="Image" name="Image" accept=".jpg,.png" />
+                
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success mt-4">
+                <i class="bi bi-floppy-fill"></i>
+                Save
+            </button>
+            <a class="btn btn-outline-danger mt-4">
+                <i class="bi bi-x-lg"></i>
+                Cancel
+            </a>
+        </form>
+    </div>
+    <div class="col-md-4">
+        @if (Model.ImageBytes != null && Model.ImageBytes.Length > 0)
+        {
+            <div id="Poster-Container" class="@(string.Empty)">
+                <img id="existing-image" src="data:image/*;base64,@(Convert.ToBase64String(Model.ImageBytes))" alt="Poster" class="img-thumbnail" />
+            </div>
+        }
+        else
+        {
+            <div id="Poster-Container" class="@(string.Empty)">
+                <img src="~/img/OIP.jpg" class="card-img-top" width="100%" height="250px" alt="...">
+            </div>
+        }
+    </div>
+
+
+</section>
+
+
+@* @section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#Image').on('change', function () {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+
+                var PosterContainer = $('#Poster-Container');
+                var image = window.URL.createObjectURL(this.files[0]);
+
+                PosterContainer.removeClass('d-none');
+                PosterContainer.find('img').attr('src', image);
+
+            });
+        }
+
+    </script>
+    } *@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#Image').on('change', function () {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+
+                var posterContainer = $('#Poster-Container');
+                var newImageSrc = window.URL.createObjectURL(this.files[0]);
+
+                // Remove existing images in the container
+                posterContainer.find('img').remove();
+
+                // Create a new image element for the selected file
+                var newImage = $('<img>').attr('src', newImageSrc).addClass('img-thumbnail');
+
+                // Append the new image to the container
+                posterContainer.append(newImage);
+            });
+        });
+    </script>
+}
+
+

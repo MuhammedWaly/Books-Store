@@ -1,0 +1,177 @@
+﻿@inject SignInManager<ApplicationUsers> SignInManager
+<!doctype html>
+<html lang="en">
+@* <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Online Book Store</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LoginAndRegister.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+</head> *@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MoviesBox</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    @* <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" /> *@
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Book Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" asp-controller="Home" asp-action="Index">
+                            Home
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    @if(User.IsInRole("User"))
+                          
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/UserOrder/UserOrder">My Orders</a>
+                        </li>
+                    }
+                    @* <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                    </li> *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true">Admin features</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Users" asp-action="Index">Manage Users</a>
+                                <a class="dropdown-item" asp-controller="Roles" asp-action="Index">Manage Roles</a>
+                                <a class="dropdown-item" asp-controller="Product" asp-action="AddBook">Add Book</a>
+
+                                <div class="dropdown-divider"></div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+    </footer>
+    <!-- Include scripts -->
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script> *@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> *@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+
+
+
+        // Load initial cart items
+        updateCartCount();
+        // LoadCartItems();
+
+
+        // async function LoadCartItems() {
+        //     try {
+
+        //         var response = await fetch(`/Cart/GetTotalItemsInCart`);
+        //         if (response.status == 200) {
+        //             var result = await response.json();
+
+        //             // Check if the product is already in the cart
+        //             var isProductInCart = result > totalCount;
+
+        //             // Update total count only if the product is not in the cart
+        //             if (!isProductInCart) {
+        //                 totalCount++;
+        //                 var CartCountEl = document.getElementById("CartCount");
+        //                 CartCountEl.innerHTML = totalCount;
+        //             }
+        //         }
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // }
+
+        async function updateCartCount() {
+            try {
+                var response = await fetch('/Cart/GetTotalItemsInCart');
+                if (response.status == 200) {
+                    var result = await response.json();
+
+                    // Assuming result is the total number of items in the cart
+                    var CartCountEl = document.getElementById("CartCount");
+
+                        CartCountEl.innerHTML = result;
+
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        // Example usage:
+        // Call this function whenever you need to update the cart count
+    //     <script>
+    //         // Fetch and update cart count on page load
+    //         document.addEventListener("DOMContentLoaded", function () {
+    //             updateCartCount();
+    //         });
+
+    //     // Function to update the cart count
+    //     async function updateCartCount() {
+    //         try {
+    //             const response = await fetch("/YourController/GetTotalItemsInCart");
+    //             const data = await response.json();
+    //             document.getElementById("CartCount").textContent = data;
+    //         } catch (error) {
+    //             console.error("Error updating cart count:", error);
+    //         }
+    //     }
+    // </script>
+    
+    
+
+
+
+
+   
+
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+
+</body>
+
+
+</html>

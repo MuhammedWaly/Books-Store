@@ -1,0 +1,85 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<form id="profile-form" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FristName" class="form-control" />
+                <label asp-for="Input.FristName" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" />
+                <label asp-for="Input.LastName" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+            </div>
+
+
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-control-sm">
+
+
+                @if (Model.Input.ProfilePic != null)
+                {
+                    <img id="ProfilePicture" alt="profile" class="ProfilePicturee" src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.ProfilePic))" />
+                }
+                else
+                {
+                    <img id="ProfilePicture" alt="profile" class="ProfilePicturee" src="~/img/966-9665317_placeholder-image-person-jpg.png" />
+                }
+
+                <div class="form-group">
+                    <label for="fileInput" class="custom-file-upload btn btn-primary">
+                        Choose Picture..
+                        <input type="file" accept=".jpg, .png" id="fileInput" asp-for="Input.ProfilePic" class="custom-file-input" onchange="previewImage(this, 'ProfilePicture')" />
+                    </label>
+                    <span id="selectedFileName" class="text-danger"></span>
+                </div>
+
+
+
+                @* <img id="ProfilePicture" src="#"  style="max-width: 100%; max-height: 150px;" /> *@
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function previewImage(input, imageId) {
+            var file = input.files[0];
+            var image = document.getElementById(imageId);
+
+            if (file) {
+                image.src = window.URL.createObjectURL(file);
+            } else {
+                // Clear the preview if no file is selected
+                image.src = "#";
+            }
+        }
+    </script>
+}

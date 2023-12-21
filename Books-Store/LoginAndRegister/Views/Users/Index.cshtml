@@ -1,0 +1,88 @@
+﻿@model IEnumerable<UserViewMode>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Users</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="margin-bottom: 13px;" asp-action="AddNew">Add New User</a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" style="width: 1200px;font-family: emoji;">
+            <thead class="thead-dark">
+                <tr style="text-align: center;">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role Name</th>
+                    <th>UserName</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="roleTableBody">
+                @foreach (var user in Model)
+                {
+                    <tr class="table-row" style="text-align: center;">
+                        <td>@user.FristName</td>
+                        <td>@user.LasttName</td>
+                        <td>@user.Email</td>
+                        <td>@string.Join(", ", user.Roles.ToList())</td>
+                        <td>@user.UserName</td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="EditRoles" asp-controller="Users" asp-route-userId="@user.Id">Roles</a>
+                            <a class="btn btn-info" asp-action="EditUsers" asp-controller="Users" asp-route-userId="@user.Id">Edit User</a>
+                            <a href="javascript:;" class="btn btn-danger Js-delete" data-id="@user.Id">Delete User</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No users found.</p>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.Js-delete').on('click', function () {
+                var btn = $(this);
+
+                bootbox.confirm({
+                    message: "Are you sure you want to delete this user?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-secondary'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/api/Users/?userId=' + btn.data('id'),
+                                method: 'DELETE', 
+                                success: function () {
+                                    btn.parents('tr').fadeOut();
+                                    alert('User deleted successfully');
+                                },
+                                error: function () {
+                                    alert('Something went wrong');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+}

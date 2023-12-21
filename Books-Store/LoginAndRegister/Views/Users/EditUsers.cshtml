@@ -1,0 +1,43 @@
+﻿@model EditUserViewModel
+@{
+    ViewData["Title"] = $"Edit {Model.Username}";
+}
+
+<form asp-action="EditUsers" method="post">
+    <h1>Edit @Model.Username</h1>
+    <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+    <input type="hidden" asp-for="Id" class="form-control" />
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" autocomplete="username" aria-required="true" />
+        <label asp-for="FirstName">Frist Name</label>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-floating mb-3">
+        <input asp-for="LastName" class="form-control" autocomplete="username" aria-required="true" />
+        <label asp-for="LastName">Last Name</label>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Username" class="form-control" autocomplete="username" aria-required="true" />
+        <label asp-for="Username">Userame</label>
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+        <label asp-for="Email">Email</label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button id="registerSubmit" type="submit" class="w-40 btn btn-primary">Add</button>
+        
+        <a class="w-40 btn btn-outline" asp-action="Index" asp-controller="Users">Cancel</a>
+    </div>
+
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    }

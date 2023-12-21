@@ -1,0 +1,111 @@
+﻿@model ShoppingCart
+
+
+@if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
+{
+    <div class="table-responsive text-center" style=" padding: 5rem; padding-top: 3rem";>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark text-center">
+                <tr class="text-center" style="text-align: center;">
+                    <th>Book</th>
+                    <th>Image</th>
+                    <th>Genre</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="roleTableBody">
+                @foreach (var item in Model.CartDetails)
+                {
+                    <tr class="table-row text-center" style="text-align: center;">
+                        <td>@item.Book.BookName</td>
+                        <td>
+                            @if (item.Book.Image != null && item.Book.Image.Length > 0)
+                            {
+                                <img style="width: 79px;" src="data:image\/*;base64,@(Convert.ToBase64String(item.Book.Image))" class="card-img-top" width="40px" height="100px" alt="...">
+                            }
+                            else
+                            {
+                                <img src="~/img/OIP.jpg" class="card-img-top" width="80%" height="150px" alt="...">
+
+                            }
+                        </td>
+                        <td>@item.Book.genre.GenreName</td>
+                        <td>@item.Book.Price</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.Quantity * item.Book.Price)</td>
+                        <td>
+                            <a class="btn btn-outline-info" href="/Cart/AddItem?bookId=@item.BookId&&redirect=1">+</a>
+                            <a class="btn btn-outline-danger" href="/Cart/RemoveItem?bookId=@item.BookId">-</a>
+                            <a class="btn btn-danger" href="/Cart/Remove?bookId=@item.BookId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="my-2">
+        <h5>Total($): </h5>
+        @(Model.CartDetails.Select(a => a.Book.Price * a.Quantity).Sum())
+    </div>
+    <div class="my-2">
+        <a class="btn btn-success" href="/Cart/Checkout">CheckOut</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive" style=" padding: 5rem; padding-top: 3rem" ;>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr style="text-align: center;">
+                    <th>Book</th>
+                    <th>Image</th>
+                    <th>Genre</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="roleTableBody">
+                
+                        
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div class="my-2">
+        <a class="btn btn-info" href="/home/Index">Add Items</a>
+    </div>
+}
+<style>
+    /* Optional: Add some spacing between buttons */
+    td a.btn {
+        margin-right: 5px;
+    }
+
+    /* Optional: Give the delete button a bit more prominence */
+    td a.btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    /* Optional: Change the color of the plus and minus buttons */
+    td a.btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    td a.btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    /* Optional: Hover effects for all buttons */
+    td a.btn:hover {
+        filter: brightness(90%);
+    }
+</style>

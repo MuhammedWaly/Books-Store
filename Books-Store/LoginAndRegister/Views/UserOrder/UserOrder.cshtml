@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Order>
+
+
+
+<h2 class="mt-2">My Orders</h2>
+
+@if (Model != null && Model.Count() > 0)
+{
+
+    <div class="table-responsive" style=" padding: 5rem; padding-top: 3rem" ;>
+        <a class="btn btn-primary" href="/Identity/Account/Manage">Back</a>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr style="text-align: center;">
+                    <th>Order Date</th>
+                    <th>Order Status</th>
+                    @* <th>Total ($)</th> *@
+                    
+
+                </tr>
+            </thead>
+            <tbody id="roleTableBody">
+                @foreach (var order in Model)
+                {
+                    <tr class="table-row" style="text-align: center;">
+                        <td>@order.CreatedDate.ToString("dd-MM-yyyy")</td>
+                        <td>@order.OrderStatus.StatusName</td>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No Orders</p>
+    <div class="table-responsive" style=" padding: 5rem; padding-top: 3rem" ;>
+        <a class="btn btn-primary" href="/Cart/GetUserCart">Go to Cart</a>
+    </div>
+}

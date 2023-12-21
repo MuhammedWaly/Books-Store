@@ -1,0 +1,82 @@
+﻿@model ProductForm
+@{
+    ViewData["Title"] = "Add Book";
+}
+<h2>Add Book</h2>
+<section class="row">
+    <div class=" col-md-4">
+        <form method="post" asp-action="AddBook" enctype="multipart/form-data" >
+
+            <div class="form-group">
+                <label class="text-muted" asp-for="BookName"></label>
+                <input type="text" class="form-control" asp-for="BookName" maxlength="40" />
+                <span asp-validation-for="BookName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted" asp-for="AuthorName"></label>
+                <input type="text" class="form-control" asp-for="AuthorName" />
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="text-muted" asp-for="GenresId"></label>
+                <select class="form-control" asp-for="GenresId" asp-items="@(new SelectList(Model.Genres,"Id","GenreName"))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="GenresId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group w-50">
+                <label class="text-muted" asp-for="Price"></label>
+                <input type="text" class="form-control" asp-for="Price" value="" style="-webkit-appearance:none;margin:0;-moz-appearance:textfield" />
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
+            </div>
+            <div class="input-group custom-file-button mt-4" style=" background-color:Background; cursor: pointer;">
+                <input type="file" class="form-control" placeholder="" asp-for="Image" accept=".jpg,.png" style="margin-left: -2px" />
+                <label class="form-control"  asp-for="Image"></label>
+                <span asp-validation-for="Image" class="text-danger"></span>
+
+            </div>
+
+            <button type="submit" class="btn btn-success mt-4">
+                
+                <i class="bi bi-floppy-fill"></i>
+                Save
+                
+            </button>
+            <a href="/Home/Index" class="btn btn-outline-danger mt-4">
+                <i class="bi bi-x-lg"></i>
+                Cancel
+            </a>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div class="d-none" id="Poster-container">
+            <img src="" alt="poster" class="img-thumbnail" />
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+
+<script>
+    $(document).ready(function () {
+        // Assuming your file input has the class 'custom-file-input'
+        $('#Image').on('change', function () {
+            var selectedFile = $(this).val().split('\\').pop();
+            $(this).siblings('label').text(selectedFile);
+
+                var posterContainer = $('#Poster-container');
+            var image = window.URL.createObjectURL(this.files[0]);
+
+            posterContainer.removeClass('d-none');
+            posterContainer.find('img').attr('src', image);
+        });
+    });
+</script> 
+}

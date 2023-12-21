@@ -1,0 +1,78 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.ProfilePicturee {
+    width: 350px;
+}
+.avatar{
+    width:40px;
+}
+
+/* Custom styling for file input button */
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+}
+/*.cssssGo {
+    
+    font-size: 12px;
+    text-align: center;
+    text-wrap:nowrap;
+}*/
+
+
+.custom-file-input {
+    display:inline-table; /* Hide the default file input */
+    
+    
+        
+}
+
+/* Additional styles for the button (you can customize these) */
+.custom-file-upload {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+    .custom-file-upload:hover {
+        background-color: #2980b9;
+    }
+
+    /* Hide the "Choose Picture.." text */
+    /*.custom-file-upload:after {
+        content: '';
+    }*/
+
+/* Display the selected file name */
+#selectedFileName {
+    margin-left: 10px;
+}
+.Registerelementstyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 0px;
+    }
