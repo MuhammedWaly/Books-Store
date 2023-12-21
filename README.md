@@ -10,7 +10,6 @@
 
 - **Backend:**
   - C#
-  - C#
   - .NET 7 MVC
   - Entity Framework Core
 
