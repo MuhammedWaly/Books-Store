@@ -11,7 +11,7 @@ public class EmailSender : IEmailSender
         var smtpClient = new SmtpClient(host:"smtp-mail.outlook.com")
         {
             Port = 587,
-            Credentials = new NetworkCredential("mohamedwaly2272000@outlook.com", "sarawaly222"),
+            Credentials = new NetworkCredential("yourOutlook@outlook.com", "Your password"),
             EnableSsl = true,
         };
 
